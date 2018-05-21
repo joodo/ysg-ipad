@@ -5,6 +5,7 @@
 #include <QTcpSocket>
 #include <QTimer>
 #include <QFile>
+#include <QDateTime>
 
 #include "socketsandbox.h"
 
@@ -13,9 +14,14 @@ class Backend : public QObject
     Q_OBJECT
 public:
     explicit Backend(QObject *parent = nullptr);
+    static Backend* instance();
+private:
+    static Backend* m_instance;
 
 signals:
     void tcpConnected();
+    void log(const QString& message);
+    void socketStateChanged(int state);
 
 public slots:
     void connectToHost();

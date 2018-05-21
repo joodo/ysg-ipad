@@ -8,11 +8,12 @@ SocketSandBox::SocketSandBox(QObject *parent) : QTcpSocket(parent)
 void SocketSandBox::sendCommand(const QString &command)
 {
     if (state() != QAbstractSocket::ConnectedState) {
+        qDebug("try reconnect to sandbox when state is %d", state());
         connectToSandBox();
     }
     for (const QString& c : command.split(',', QString::SkipEmptyParts)) {
         write(QByteArray::fromHex(c.toUtf8()));
-        qDebug(c.toUtf8());
+        qDebug("send to sandbox: %s", c.toStdString().c_str());
     }
 }
 

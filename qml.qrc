@@ -13,5 +13,6 @@
         <file>img/stop.png</file>
         <file>img/volume_down.png</file>
         <file>img/volume_up.png</file>
+        <file>PageDebug.qml</file>
     </qresource>
 </RCC>

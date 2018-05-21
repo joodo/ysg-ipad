@@ -12,8 +12,9 @@ Window {
         id: view
 
         anchors.fill: parent
-        currentIndex: 1
+        currentIndex: 2
 
+        PageDebug {}
         PageHelp {}
         PagePower {}
         PageSandbox {}
