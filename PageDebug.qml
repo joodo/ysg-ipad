@@ -14,6 +14,13 @@ Item {
                 onClicked: Backend.sendMessage("ping")
             }
             Text {
+                id: textHostAddress
+                font.pointSize: 32
+                anchors.verticalCenter: parent.verticalCenter
+                color: "white"
+                text: "0.0.0.0"
+            }
+            Text {
                 id: textSocketState
                 font.pointSize: 32
                 anchors.verticalCenter: parent.verticalCenter
@@ -43,5 +50,6 @@ Item {
             print("Socket state changed: " + state)
             textSocketState.text = state
         }
+        onHostAddressChanged: textHostAddress.text = newAddress
     }
 }

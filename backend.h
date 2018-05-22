@@ -6,6 +6,7 @@
 #include <QTimer>
 #include <QFile>
 #include <QDateTime>
+#include <QUdpSocket>
 
 #include "socketsandbox.h"
 
@@ -22,6 +23,7 @@ signals:
     void tcpConnected();
     void log(const QString& message);
     void socketStateChanged(int state);
+    void hostAddressChanged(const QString& newAddress);
 
 public slots:
     void connectToHost();
@@ -32,6 +34,10 @@ public slots:
 private:
     SocketSandBox m_socketSandBox;
     QTcpSocket *m_socket = nullptr;
+
+private:
+    QString m_hostAddress;
+    QUdpSocket *m_udpSocket = nullptr;
 };
 
 #endif // BACKEND_H
