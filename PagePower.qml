@@ -33,6 +33,7 @@ Item {
                             enabled = false
                             text = "正在打开…"
                             rectMediaControl.visible = true
+                            connectCodeInput.visible = true
                             rectWaitMask.wait(50000)
                             Backend.lightAction("1b43dd0d0a650080,1b43dd0d0a650000")
                         }
@@ -49,6 +50,7 @@ Item {
                             enabled = false
                             text: "正在关闭…"
                             rectMediaControl.visible = false
+                            connectCodeInput.visible = false
                             rectWaitMask.wait(25000)
 
                             Backend.sendMessage("shutdown")
@@ -60,7 +62,7 @@ Item {
         }
 
         Item {
-            width: 700; height: 400
+            width: 700; height: 450
             Layout.alignment: Qt.AlignHCenter
 
 
@@ -118,6 +120,13 @@ Item {
                 }
             }
 
+            ConnectCodeInput {
+                id: connectCodeInput
+                anchors.fill: parent
+                z: 1
+                visible: false
+            }
+
             Rectangle {
                 id: rectWaitMask
                 function wait(duration) {
@@ -129,6 +138,7 @@ Item {
                 anchors.fill: parent
                 color: "#212329"
                 visible: false
+                z: 2
 
                 ProgressBar {
                     id: progressBar

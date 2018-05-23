@@ -18,26 +18,6 @@ Backend::Backend(QObject *parent) : QObject(parent)
         QString message = "Host response: " + m_socket->readAll();
         qDebug(message.toUtf8());
     });
-
-    m_udpSocket = new QUdpSocket();
-    m_udpSocket->bind(QHostAddress::AnyIPv4, 8901);
-    connect(m_udpSocket, &QUdpSocket::readyRead, [=]() {
-        QByteArray array;
-        array.resize(m_udpSocket->bytesAvailable());//根据可读数据来设置空间大小
-        m_udpSocket->readDatagram(array.data(), array.size()); //读取数据
-
-        QString message = QString(array);
-        if (message.startsWith("ysgserver:")) {
-            QString hostAddress = message.mid(10);
-            if (m_hostAddress != hostAddress) {
-                emit hostAddressChanged(hostAddress);
-            }
-        }
-    });
-    connect(this, &Backend::hostAddressChanged, [=](const QString& newAddress) {
-        m_hostAddress = newAddress;
-        qDebug(("Host address changed: "+m_hostAddress).toUtf8());
-    });
 }
 
 Backend *Backend::instance()
@@ -79,4 +59,10 @@ QString Backend::readFile(const QString &path)
         file.close();
     }
     return re;
+}
+
+void Backend::setConnectCode(const QString& code)
+{
+    m_hostAddress = "192.168.1." + code;
+    emit hostAddressChanged(m_hostAddress);
 }

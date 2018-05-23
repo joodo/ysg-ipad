@@ -6,7 +6,6 @@
 #include <QTimer>
 #include <QFile>
 #include <QDateTime>
-#include <QUdpSocket>
 
 #include "socketsandbox.h"
 
@@ -30,6 +29,7 @@ public slots:
     void sendMessage(const QString& message);
     void lightAction(const QString& command);
     QString readFile(const QString& path);
+    void setConnectCode(const QString& code);
 
 private:
     SocketSandBox m_socketSandBox;
@@ -37,7 +37,6 @@ private:
 
 private:
     QString m_hostAddress;
-    QUdpSocket *m_udpSocket = nullptr;
 };
 
 #endif // BACKEND_H
