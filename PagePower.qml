@@ -46,16 +46,7 @@ Item {
                         text: "关闭电源"
                         color: "#e55c5c"
                         enabled: true
-                        onClicked: {
-                            enabled = false
-                            text: "正在关闭…"
-                            rectMediaControl.visible = false
-                            connectCodeInput.visible = false
-                            rectWaitMask.wait(25000)
-
-                            Backend.sendMessage("shutdown")
-                            Backend.lightAction("1b43dd0d0a660080,1b43dd0d0a660000")
-                        }
+                        onClicked: dialog.visible = true
                     }
                 }
             ]
@@ -174,6 +165,29 @@ Item {
                     }
                 }
             }
+        }
+    }
+
+    Dialog {
+        id: dialog
+        standardButtons: Dialog.Yes | Dialog.No
+        modal: true
+        x: (parent.width-width) / 2; y: (parent.height-height)/2
+
+        Text {
+            text: "确认关闭电源吗？"
+            font.pointSize: 32
+        }
+
+        onAccepted: {
+            buttonPower.enabled = false
+            buttonPower.text = "正在关闭…"
+            rectMediaControl.visible = false
+            connectCodeInput.visible = false
+            rectWaitMask.wait(25000)
+
+            Backend.sendMessage("shutdown")
+            Backend.lightAction("1b43dd0d0a660080,1b43dd0d0a660000")
         }
     }
 }
