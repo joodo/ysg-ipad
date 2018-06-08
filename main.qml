@@ -1,22 +1,25 @@
-import QtQuick 2.10
+﻿import QtQuick 2.10
 import QtQuick.Window 2.10
 import QtQuick.Controls 2.3
 
 Window {
+    id: window
     visible: true
     title: qsTr("Hello World")
-    width: 800; height: 800
+    visibility: Window.FullScreen
     color: "#212329"
 
     SwipeView {
-        id: view
+            id: view
 
-        anchors.fill: parent
-        currentIndex: 2
+            currentIndex: 2
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: 1536; height: parent.height
 
-        PageDebug {}
-        PageHelp {}
-        PagePower {}
-        PageSandbox {}
-    }
+            PageDebug {}
+            PageHelp {}
+            PagePower {}
+            PageSandbox {}
+        }
+
 }

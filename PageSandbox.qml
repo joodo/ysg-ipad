@@ -1,7 +1,10 @@
-import QtQuick 2.10
+﻿import QtQuick 2.10
 import QtQuick.Layouts 1.3
 
 Item {
+    Component.onCompleted: {
+        if (Qt.platform.os === "android") scale = 1200/1536
+    }
     ColumnLayout {
         anchors { top: parent.top; left: parent.left; right: parent.right; margins: 16 }
         spacing: 32
