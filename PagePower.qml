@@ -100,10 +100,29 @@ Item {
                     }
                 }
 
-                Row {
-                    y: 240; anchors.horizontalCenter: parent.horizontalCenter
+                Column {
+                    y: 180
+                    anchors { right: parent.right; rightMargin: 32 }
                     spacing: 16
                     MyRoundButton {
+                        source: "qrc:/img/volume_up.png"
+                        onClicked: Backend.sendMessage("volumeup")
+                    }
+                    MyRoundButton {
+                        source: "qrc:/img/volume_down.png"
+                        onClicked: Backend.sendMessage("volumedown")
+                    }
+                    MyRoundButton {
+                        source: "qrc:/img/mute.png"
+                        onClicked: Backend.sendMessage("mute")
+                    }
+                }
+
+                Row {
+                    y: 210; anchors.horizontalCenter: parent.horizontalCenter
+                    spacing: 36
+                    MyRoundButton {
+                        size: 96; color: "#8470FF"
                         source: "qrc:/img/play.png"
                         onClicked: {
                             buttonZoom.visible = false
@@ -111,6 +130,7 @@ Item {
                         }
                     }
                     MyRoundButton {
+                        size: 96; color: "#8470FF"
                         source: "qrc:/img/pause.png"
                         onClicked: {
                             buttonZoom.visible = true
@@ -119,8 +139,9 @@ Item {
 
                         MyRoundButton {
                             id: buttonZoom
+                            size: 72
                             onVisibleChanged: busyIndicator.running = visible
-                            y: 80
+                            y: 120; anchors.horizontalCenter: parent.horizontalCenter
                             source: "qrc:/img/zoom.png"
                             visible: false
                             onClicked: popupZoom.visible = true
@@ -152,24 +173,12 @@ Item {
                         }
                     }
                     MyRoundButton {
+                        size: 96; color: "#8470FF"
                         source: "qrc:/img/stop.png"
                         onClicked: {
                             buttonZoom.visible = false
                             Backend.sendMessage("stop")
                         }
-                    }
-                    Item { height: 1; width: 16 }
-                    MyRoundButton {
-                        source: "qrc:/img/volume_up.png"
-                        onClicked: Backend.sendMessage("volumeup")
-                    }
-                    MyRoundButton {
-                        source: "qrc:/img/volume_down.png"
-                        onClicked: Backend.sendMessage("volumedown")
-                    }
-                    MyRoundButton {
-                        source: "qrc:/img/mute.png"
-                        onClicked: Backend.sendMessage("mute")
                     }
                 }
             }
