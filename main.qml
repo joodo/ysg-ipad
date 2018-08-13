@@ -12,6 +12,7 @@ Window {
     SwipeView {
         id: view
 
+        focus: true
         currentIndex: 2
         anchors.horizontalCenter: parent.horizontalCenter
         width: 1536; height: parent.height
@@ -19,13 +20,13 @@ Window {
         PageDebug {}
         PageHelp {}
         PagePower {}
-        PageSandbox {}
-    }
+        // PageSandbox {}
 
-    Keys.onReleased: {
-        if (event.key === Qt.Key_Back) {
-            console.log("Back button of phone pressed")
-            event.accepted = true
+        Keys.onReleased: {
+            if (event.key === Qt.Key_Back) {
+                console.log("Back button of phone pressed")
+                event.accepted = true
+            }
         }
     }
 }
