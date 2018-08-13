@@ -45,6 +45,7 @@ Item {
                             rectMediaControl.visible = true
                             connectCodeInput.visible = true
                             rectWaitMask.wait(50000)
+                            //rectWaitMask.wait(500)
                             Backend.lightAction("1b43dd0d0a650080,1b43dd0d0a650000")
                         }
                     }
@@ -144,7 +145,8 @@ Item {
                             }
                             Timer {
                                 // 重复发出截图请求
-                                interval: 1000; triggeredOnStart: false; running: busyIndicator.running; repeat: true
+                                running: false
+                                interval: 1000; triggeredOnStart: false; repeat: true
                                 onTriggered: Backend.sendMessage("pause")
                             }
                         }
