@@ -10,16 +10,15 @@ Window {
     color: "#212329"
 
     SwipeView {
-            id: view
+        id: view
 
-            currentIndex: 2
-            anchors.horizontalCenter: parent.horizontalCenter
-            width: 1536; height: parent.height
+        currentIndex: 2
+        anchors.horizontalCenter: parent.horizontalCenter
+        width: 1536; height: parent.height
 
-            PageDebug {}
-            PageHelp {}
-            PagePower {}
-            PageSandbox {}
-        }
-
+        PageDebug {}
+        PageHelp {}
+        PagePower {}
+        PageSandbox {}
+    }
 }

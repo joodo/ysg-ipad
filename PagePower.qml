@@ -6,6 +6,13 @@ Item {
     Component.onCompleted: {
         if (Qt.platform.os === "android") scale = 1200/1536
     }
+    PopupZoom {
+        id: popupZoom
+        anchors.fill: parent
+        z: 100
+        visible: false
+    }
+
     ColumnLayout {
         anchors { top: parent.top; left: parent.left; right: parent.right; margins: 16 }
         spacing: 32
@@ -71,15 +78,24 @@ Item {
                     spacing: 16
                     BigButton {
                         text: "宣传片中文"
-                        onClicked: Backend.sendMessage("a")
+                        onClicked: {
+                            buttonZoom.visible = false
+                            Backend.sendMessage("a")
+                        }
                     }
                     BigButton {
                         text: "宣传片英文"
-                        onClicked: Backend.sendMessage("b")
+                        onClicked: {
+                            buttonZoom.visible = false
+                            Backend.sendMessage("b")
+                        }
                     }
                     BigButton {
                         text: "幻灯片"
-                        onClicked: Backend.sendMessage("c")
+                        onClicked: {
+                            buttonZoom.visible = false
+                            Backend.sendMessage("c")
+                        }
                     }
                 }
 
@@ -88,15 +104,57 @@ Item {
                     spacing: 16
                     MyRoundButton {
                         source: "qrc:/img/play.png"
-                        onClicked: Backend.sendMessage("play")
+                        onClicked: {
+                            buttonZoom.visible = false
+                            Backend.sendMessage("play")
+                        }
                     }
                     MyRoundButton {
                         source: "qrc:/img/pause.png"
-                        onClicked: Backend.sendMessage("pause")
+                        onClicked: {
+                            buttonZoom.visible = true
+                            Backend.sendMessage("pause")
+                        }
+
+                        MyRoundButton {
+                            id: buttonZoom
+                            onVisibleChanged: busyIndicator.running = visible
+                            y: 80
+                            source: "qrc:/img/zoom.png"
+                            visible: false
+                            onClicked: popupZoom.visible = true
+                            enabled: !busyIndicator.running
+                            Rectangle {
+                                anchors.centerIn: parent
+                                width: parent.width; height: width; radius: width
+                                color: "#ccffffff"
+                                visible: busyIndicator.running
+                                z: 5
+                            }
+                            BusyIndicator {
+                                id: busyIndicator
+                                anchors.centerIn: parent
+                                width: 56; height: 56
+                                running: true
+                                z: 10
+                                Connections {
+                                    target: Backend
+                                    onSnapshotReceived: busyIndicator.running = false
+                                }
+                            }
+                            Timer {
+                                // 重复发出截图请求
+                                interval: 1000; triggeredOnStart: false; running: busyIndicator.running; repeat: true
+                                onTriggered: Backend.sendMessage("pause")
+                            }
+                        }
                     }
                     MyRoundButton {
                         source: "qrc:/img/stop.png"
-                        onClicked: Backend.sendMessage("stop")
+                        onClicked: {
+                            buttonZoom.visible = false
+                            Backend.sendMessage("stop")
+                        }
                     }
                     Item { height: 1; width: 16 }
                     MyRoundButton {

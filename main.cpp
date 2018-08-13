@@ -13,6 +13,7 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
 
     engine.rootContext()->setContextProperty("Backend", Backend::instance());
+    // engine.addImageProvider(QLatin1String("snapshot"), Backend::instance()->snapshotImageProvider());
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())

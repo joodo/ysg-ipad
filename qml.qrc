@@ -15,5 +15,7 @@
         <file>img/volume_up.png</file>
         <file>PageDebug.qml</file>
         <file>ConnectCodeInput.qml</file>
+        <file>PopupZoom.qml</file>
+        <file>img/zoom.png</file>
     </qresource>
 </RCC>

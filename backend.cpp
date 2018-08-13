@@ -14,10 +14,9 @@ Backend::Backend(QObject *parent) : QObject(parent)
     m_socket = new QTcpSocket();
     connect(m_socket, &QAbstractSocket::connected, this, &Backend::tcpConnected);
     connect(m_socket, &QAbstractSocket::stateChanged, this, &Backend::socketStateChanged);
-    connect(m_socket, &QAbstractSocket::readyRead, [=]() {
-        QString message = "Host response: " + m_socket->readAll();
-        qDebug(message.toUtf8());
-    });
+    connect(m_socket, &QAbstractSocket::readyRead, this, &Backend::onTcpReadyRead);
+
+    // m_snapshotImageProvider = new SnapshotImageProvider();
 }
 
 Backend *Backend::instance()
@@ -65,4 +64,24 @@ void Backend::setConnectCode(const QString& code)
 {
     m_hostAddress = "192.168.1." + code;
     emit hostAddressChanged(m_hostAddress);
+}
+
+void Backend::onTcpReadyRead()
+{
+    QString s = QString::fromUtf8(m_socket->readAll());
+    if (s == "pong") {
+        qDebug("pong");
+        return;
+    }
+    if (s.startsWith("data:")) {
+        m_snapshotUrlData = s;
+        emit snapshotReceived();
+    } else {
+        m_snapshotUrlData += s;
+    }
+}
+
+QString Backend::snapshotUrlData() const
+{
+    return m_snapshotUrlData;
 }

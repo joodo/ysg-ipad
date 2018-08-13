@@ -8,6 +8,7 @@
 #include <QDateTime>
 
 #include "socketsandbox.h"
+#include "snapshotimageprovider.h"
 
 class Backend : public QObject
 {
@@ -15,6 +16,7 @@ class Backend : public QObject
 public:
     explicit Backend(QObject *parent = nullptr);
     static Backend* instance();
+
 private:
     static Backend* m_instance;
 
@@ -34,6 +36,18 @@ public slots:
 private:
     SocketSandBox m_socketSandBox;
     QTcpSocket *m_socket = nullptr;
+
+public:
+    // SnapshotImageProvider *snapshotImageProvider() const;
+signals:
+    void snapshotReceived();
+public slots:
+    QString snapshotUrlData() const;
+private slots:
+    void onTcpReadyRead();
+private:
+    // SnapshotImageProvider *m_snapshotImageProvider;
+    QString m_snapshotUrlData;
 
 private:
     QString m_hostAddress;
