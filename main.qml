@@ -21,4 +21,11 @@ Window {
         PagePower {}
         PageSandbox {}
     }
+
+    Keys.onReleased: {
+        if (event.key === Qt.Key_Back) {
+            console.log("Back button of phone pressed")
+            event.accepted = true
+        }
+    }
 }
